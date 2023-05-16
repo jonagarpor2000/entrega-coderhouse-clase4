@@ -1,0 +1,12 @@
+{
+  "name": "desafio-clase4",
+  "version": "1.0.0",
+  "description": "Crud con archivos",
+  "main": "ProductManager.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathan Garcia",
+  "license": "ISC"
+}
