@@ -1,5 +1,5 @@
 import fs from 'fs';
-
+//Hola
 
 class ProductManager {
     #filename
@@ -28,17 +28,17 @@ class ProductManager {
 
     #generateId = async () => {
      const products = await this.getProducts()
-     return (products == undefined) ? 1 : products[products.length-1].id + 1;
+     return (products.length === 0) ? 1 : products[products.length-1].id + 1
     } 
     
 
     
     
-    #validateProduct = (title, description, price, thumbnail, code, stock) => {
+    #validateProduct = async (title, description, price, thumbnail, code, stock) => {
         if (!title || !description || !price || !thumbnail || !code || !stock) {
             this.#error = `[${code}]: campos incompletos`
         } else {
-            let contenido = this.getProducts()
+            let contenido = await this.getProducts()
             const found = contenido.find(producto => producto.code === code)
             if (found) this.#error = `[${code}]: el code ya existe`
             else this.#error = undefined
@@ -48,12 +48,15 @@ class ProductManager {
     addProduct = async (title, description, price, thumbnail,code,stock) => {
        
         let prodarr = []
-         this.#validateProduct(title, description, price, thumbnail,code,stock)
-        if (this.#error === undefined) 
-            prodarr.push({id: this.#generateId(),title, description,  price, thumbnail,code,stock})
-        else 
+        await this.#validateProduct(title, description, price, thumbnail,code,stock)
+        if (this.#error === undefined){
+            let id_prodarr = await this.#generateId()
+            prodarr.push({id: id_prodarr,title, description,  price, thumbnail,code,stock})
+            await fs.promises.appendFile(this.#filename, JSON.stringify(prodarr, null,'\t'))
+        }else{ 
             console.log(this.#error)
-        await fs.promises.writeFile(this.#filename, JSON.stringify(prodarr, null,'\t'))
+            await fs.promises.writeFile(this.#filename, JSON.stringify(prodarr, null,'\t'))
+        }
 
     }
 
@@ -84,18 +87,19 @@ class ProductManager {
         }
         
 
+
     };
 
     
+
 }
 
 const productmg = new ProductManager('./products.json')
 productmg.getProducts().then(productos => console.log(productos))
-productmg.addProduct('producto prueba', 'Este es un producto prueba',200,'Sin imagen','abc123',25)
+productmg.addProduct('producto prueba', 'Este es un producto prueba',200,'Sin imagen','abc12',25)
 productmg.getProducts().then(productos => console.log(productos))
-productmg.getProductById(5)
-
-//productmg.updateProduct(5,'Hola','Hola','Hola','Hola','Hola',2)
-//productmg.deleteProduct(2)
+productmg.getProductById(1)
+productmg.updateProduct(2,'Hola','Hola','Hola','Hola','Hola',2)
+productmg.deleteProduct(1)
 
 

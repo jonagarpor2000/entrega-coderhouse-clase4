@@ -1,29 +1,11 @@
 [
 	{
 		"id": 1,
-		"title": "Banana",
-		"description": "banana",
-		"price": 20,
-		"thumbnail": "hyttpaso:asddos?",
-		"code": 1,
-		"stock": 12
-	},
-	{
-		"id": 3,
-		"title": "Bote",
-		"description": "Salta mucho",
-		"price": 512,
-		"thumbnail": "zsdasd:asddos?",
-		"code": "ABC321",
-		"stock": 2
-	},
-	{
-		"id": 5,
-		"title": "Hola",
-		"description": "Hola",
-		"price": "Hola",
-		"thumbnail": "Hola",
-		"code": "Hola",
-		"stock": 2
+		"title": "producto prueba",
+		"description": "Este es un producto prueba",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc123",
+		"stock": 25
 	}
 ]
